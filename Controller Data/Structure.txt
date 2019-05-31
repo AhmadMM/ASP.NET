@@ -1,0 +1,23 @@
+
+
+
+ /// <summary>
+        /// Description Written HERE
+        /// </summary>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
+        /// <param name="Z"></param> 
+        /// <returns></returns>
+        [HttpGet]
+        public Reports APICall(int X, int? Y= -1, int? Z= -1)
+        {
+            #region Initialization   
+            ReportData data= new ReportData();
+            List<ReportData> reports = new List<ReportData>();
+            #endregion
+ 
+            //Default Calls
+            reports.Add(Funx(X,Y.GetValueOrDefault(), Z.GetValueOrDefault()));   
+            data.Output = reports;
+            return data;
+        }
