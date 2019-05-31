@@ -1,0 +1,16 @@
+
+    public class ReportData 
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Info { get; set; }
+        public string Type { get; set; }
+        public string View_By { get; set; }   
+        public dynamic Data { get; set; } 
+    }
+
+    public class Reports
+    {
+        public string ReportType { get; set; } 
+        public List<ReportData> Output { get; set; } 
+    }
