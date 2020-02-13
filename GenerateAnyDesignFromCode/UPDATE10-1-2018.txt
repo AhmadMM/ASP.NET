@@ -1,0 +1,31 @@
+We can use Repeater tag to get rid of Design Problems
+
+
+<asp:Repeater runat="server" ID="dsFillTOPFeaturedBooks">
+                    <ItemTemplate>
+
+                        <figure class="span4 s-product" style="height: 260px !important;"> 
+                            <div class="s-product-img"><a href="#" >
+                                <asp:Image runat="server" ID="imgBook" ImageUrl='<%# Bind("Content")%>' alt="" style="height: 200px;"/></a></div>
+                            <div class="s-product-det">
+                                <h3><a href="#">
+                                    <asp:Label runat="server" ID="lblBookNameRighty" Text='<%# Bind("BookName")%>'></asp:Label></a></h3>
+                                <p>
+                                    <asp:Label runat="server" ID="lblSubject" Text='<%# Bind("Subject")%>'></asp:Label></p>
+                                <span class="rating-bar">
+                                    <img src="images/rating-star.png" alt="Rating Star" /></span>
+                                <div class="cart-price"><a href="cart.html" class="cart-btn2">Add to Cart</a> <span class="price">
+                                    <asp:Label runat="server" ID="lblPriceTagLefty" Text='<%# Bind("BookPrice")%>'></asp:Label>$</span> </div>
+                                <span class="sale-icon">Sale</span>
+                            </div>
+                        </figure>
+
+                    </ItemTemplate>
+                </asp:Repeater>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
+
+
+
+Global.LoadTableRepeater(dsFillTopAuthor, "ShopGETFeaturedBooks", 1);

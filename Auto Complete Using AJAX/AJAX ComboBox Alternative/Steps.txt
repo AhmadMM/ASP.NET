@@ -1,0 +1,123 @@
+1) Add AJAX..dll to Refrences
+
+2) Add to Web Config
+
+ 	 <pages>
+        <controls>
+          <add tagPrefix="asp" namespace="System.Web.UI" assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral,  PublicKeyToken=31bf3856ad364e35"/>
+          <add namespace="asp" assembly="AjaxControlToolkit" tagPrefix="ajaxToolkit"/>
+        </controls>
+      </pages>	
+		
+	<httpHandlers>
+        <remove verb="*" path="*.asmx"/>
+        <add verb="*" path="*.asmx" type="System.Web.Script.Services.ScriptHandlerFactory" validate="false"/>
+      </httpHandlers>
+
+
+3) Start in  Design Page
+	
+	 <div>
+                                    <asp:Label ID="lblBook" runat="server" Text="Book Search"></asp:Label>
+                                    <div>
+                                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                            <ContentTemplate>
+                                                <asp:ComboBox ID="txtBookName" runat="server"
+                                                    AutoPostBack="False"
+                                                    AutoCompleteMode="SuggestAppend"
+                                                    CaseSensitive="False"
+                                                    ItemInsertLocation="Append"
+                                                    Visible="true" placeholder="Name" CssClass="AS"> 
+                                                </asp:ComboBox>  
+                                            </ContentTemplate>
+                                            <Triggers>
+                                                <asp:AsyncPostBackTrigger ControlID="txtBookName" />
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+                                    </div>
+
+<style>
+  .ajax__combobox_itemlist {
+            position: absolute !important;
+            height: 100px !important;
+            overflow: auto !important;
+            top: auto !important;
+            left: auto !important;
+            width:auto !important;
+           /*display: none !important;*/ 
+           overflow-x:hidden !important;
+        }
+
+        .AS .ajax__combobox_textboxcontainer {
+            width: 100% !important;
+        }
+
+         .ajax__combobox_buttoncontainer button {
+            display: none;
+        }
+
+        .AS .ajax__combobox_inputcontainer td {
+            padding: 1% !important;
+            width: 100% !important; 
+    margin-top: 5%;
+    font-size: 13px;
+    color: #000;
+    height: 26px; 
+        }
+</style>
+
+
+4)  In Code 
+
+   Global.FillDropDownProcWithoutDash(txtBookName, "GetBooks", "Title", "ID", "Name");
+		|
+		|
+		|
+		|	
+		V
+public static void FillDropDownProcWithoutDash(AjaxControlToolkit.ComboBox ddl, string ProcedureName, string CommandName, string CommandiD,string FirstColText)
+        {
+            try
+            {
+                Global.Connect();
+                SqlCommand cmd = new SqlCommand(ProcedureName, Global.con);
+                //cmd.Parameters.AddWithValue("@Username", txtUsername.Text);
+                //cmd.Parameters.AddWithValue("@Password", txtPassword.Text);
+                //cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader reader = default(SqlDataReader);
+                ddl.Items.Clear();
+                try
+                {
+                    Connect();
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        ListItem newItem = new ListItem();
+                        newItem.Text = reader[CommandName].ToString();
+                        newItem.Value = reader[CommandiD].ToString();
+                        ddl.Items.Add(newItem);
+                    }
+                    reader.Close();
+                }
+                catch (Exception err)
+                {
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+            ddl.Items.Insert(0, new ListItem(FirstColText, "NaN"));
+            ddl.SelectedIndex =0; 
+            ddl.Items[0].Attributes.Add("disabled", "disabled"); 
+        }
+
+
+
+
+	

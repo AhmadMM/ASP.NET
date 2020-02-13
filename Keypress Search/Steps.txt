@@ -1,0 +1,39 @@
+Steps:
+
+1)  
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script><script type="text/javascript"  >
+      $(function () {
+          $("#txtSearchGrid").keypress(function () {
+            var clickButton = document.getElementById("<%= btnClick.ClientID %>");
+                  clickButton.click(); 
+                 
+            
+          });
+      });
+          </script> 
+
+in Header
+
+
+2)  <input id="txtSearchGrid" name="txtSearchGrid" class="input_Text" placeholder="Search Everything...??" /> 
+   
+
+
+In Code Behind
+
+ protected void txtSearchGrid_TextChanged(object sender, EventArgs e)
+        {
+            try {
+                string value = Request.Form["txtSearchGrid"].ToString();
+                if (value == string.Empty) {
+                    Lolita.Global.LoadTableSP(gvItems, "getitems");
+                }
+                else { 
+                Lolita.Global.LoadTableBySearching(gvItems, "Items", value);}
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }

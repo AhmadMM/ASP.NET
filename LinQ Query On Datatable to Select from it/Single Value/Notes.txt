@@ -1,0 +1,8 @@
+   string Variable	= MyDataTable
+                                  .DefaultView
+                                  .ToTable(true, "FieldName","FieldID")
+                                  .Rows
+                                  .Cast<DataRow>()
+                                  .Where(myRow => myRow.Field<int>("FieldID") == FieldID)
+                                  .Select(myRow => myRow["FieldName"])
+                                  .Distinct().ToString();

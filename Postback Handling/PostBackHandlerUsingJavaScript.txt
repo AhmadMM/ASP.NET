@@ -1,0 +1,5 @@
+
+In Html 
+
+onchange="javascript:setTimeout('__doPostBack(\'ddlSurveyname\',\'\')', 0)" 
+AutoPostBack="true"

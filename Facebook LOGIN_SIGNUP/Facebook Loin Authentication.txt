@@ -1,0 +1,113 @@
+https://developers.facebook.com
+
+1)Signin Into Facebook : https://www.facebook.com/login.php?next=https%3A%2F%2Fdevelopers.facebook.com%2Fapps
+
+2)Click the Create New App button
+
+3)Go Down and click QuickStart
+
+4)Copy JS Code and paste them in header
+   <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '314392409048504',
+                xfbml: true,
+                version: 'v2.11'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
+5) Copy and Paste in Body
+
+<div id="fb-root"></div>
+    <script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.11&appId=314392409048504';
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+    <asp:Button ID="Button1" runat="server" Text="Login with FaceBook" OnClick="Login" /> 
+  
+
+6) Add to Page ddl ASPSpinnet for Facebook class
+
+7) Add to Code the following
+
+
+using ASPSnippets.FaceBookAPI;
+using System.Web.Script.Serialization;
+
+
+
+   protected void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                FaceBookConnect.API_Key = "168177840465292"; 				// IN DASHBOARD FACEBOOK YOU CAN FIND IT AS APP ID
+                FaceBookConnect.API_Secret = "7cef6ad91cc64d1863727e1988d9bc0a";	// IN DASHBOARD FACEBOOK YOU CANFIND IT AS App Secret
+                if (!IsPostBack)
+                {
+                    if (Request.QueryString["error"] == "access_denied")
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('User has denied access.')", true);
+                        return;
+                    }
+
+                    string code = Request.QueryString["code"];
+                    if (!string.IsNullOrEmpty(code))
+                    {
+                        string data = FaceBookConnect.Fetch(code, "me?fields=id,name,email");
+                        FaceBookUser faceBookUser = new JavaScriptSerializer().Deserialize<FaceBookUser>(data);
+                        faceBookUser.PictureUrl = string.Format("https://graph.facebook.com/{0}/picture", faceBookUser.Id);
+                        string UserID = "";
+                        string username = "";
+                        string Name = "";
+                        string email = "";
+                        string PPURL = "";
+                        UserID = faceBookUser.Id;
+                        username = faceBookUser.UserName;
+                        Name = faceBookUser.Name;
+                        email = faceBookUser.Email;
+                        PPURL = faceBookUser.PictureUrl;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+ protected void Login(object sender, EventArgs e) 										//BUTTON
+        {
+            FaceBookConnect.Authorize("user_photos,email", Request.Url.AbsoluteUri.Split('?')[0]);
+        }
+																//NEW CLASS FOR INTIALIAZATION NOT NEEDED MUCH	
+        public class FaceBookUser
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string UserName { get; set; }
+            public string PictureUrl { get; set; }
+            public string Email { get; set; }
+        }
+
+
+
+
+
+
+
+
+8) Click on Product in facebook page in OAuth URL Add your needed URLS

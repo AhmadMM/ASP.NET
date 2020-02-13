@@ -1,0 +1,78 @@
+1) Add AJAX..dll to Refrences
+
+2) Add to Web Config
+
+ 	 <pages>
+        <controls>
+          <add tagPrefix="asp" namespace="System.Web.UI" assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral,  PublicKeyToken=31bf3856ad364e35"/>
+          <add namespace="asp" assembly="AjaxControlToolkit" tagPrefix="ajaxToolkit"/>
+        </controls>
+      </pages>	
+		
+	<httpHandlers>
+        <remove verb="*" path="*.asmx"/>
+        <add verb="*" path="*.asmx" type="System.Web.Script.Services.ScriptHandlerFactory" validate="false"/>
+      </httpHandlers>
+
+
+3) Start in  Design Page
+	
+	  <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+                                            <ContentTemplate>
+                                                <asp:TextBox runat="server" ID="txtSchoolName" placeholder="Name" CssClass="form-control"></asp:TextBox>
+                                                <asp:AutoCompleteExtender ID="AutoCompleteExtender4" runat="server" Enabled="True"
+                                                    ServiceMethod="GetSchoolName"
+                                                    ServicePath="~\server.asmx"
+                                                    TargetControlID="txtSchoolName"
+                                                    UseContextKey="false"
+                                                    MinimumPrefixLength="1"
+                                                    CompletionInterval="50" CompletionListElementID="Panel4">
+                                                </asp:AutoCompleteExtender>
+                                                <asp:Panel runat="server" ID="Panel4" tab_1ScrollBars="Vertical" Style="overflow-y: auto; overflow-x: hidden; text-overflow: ellipsis">
+                                                </asp:Panel>
+
+                                            </ContentTemplate>
+                                            <Triggers>
+                                                <asp:AsyncPostBackTrigger ControlID="txtSchoolName" />
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+
+
+4) Create a server.asmx and add to it
+
+	 [System.Web.Script.Services.ScriptMethod]	<-------------------------------------------What makes it work
+         [WebMethod]
+        public List<string> GetBookName(string prefixText)
+        {
+            try
+            {
+                Global.Connect();
+                Global.Connection();
+                SqlCommand sqlCommand = new SqlCommand("GetBooks", Global.con);
+                sqlCommand.Parameters.AddWithValue("@Name", prefixText);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                //------------------------------------------------ 
+                DataTable dt = new DataTable();
+
+                SqlDataAdapter adp = new SqlDataAdapter(sqlCommand);
+
+                adp.Fill(dt);
+
+                List<string> Books = new List<string>();
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Books.Add(dt.Rows[i][0].ToString());
+                }
+                return Books;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
+
+
+	

@@ -1,0 +1,534 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="BCCBookStore.Main" %>
+
+<%@ Register TagPrefix="asp" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Kotob Shop'</title>
+    <!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+    <!--[if lt IE 9]>
+	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link rel="icon" href="images/Emblem.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Css Files Start -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/update-responsive.css" rel="stylesheet" type="text/css" />
+    <!-- All css -->
+    <link href="css/bs.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" type="text/css" href="css/main-slider.css" />
+    <!-- Main Slider Css -->
+    <!--[if lte IE 10]><link rel="stylesheet" type="text/css" href="css/customIE.css" /><![endif]-->
+    <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Css -->
+    <link href="css/font-awesome-ie7.css" rel="stylesheet" type="text/css" />
+    <!-- Booklet Css -->
+    <link href="css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
+
+    <link rel="stylesheet" type="text/css" href="css/noJS.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        .ul {
+            display: block;
+            list-style: none;
+            margin: 0;
+            padding: 12px 10px;
+            height: 21px;
+        }
+
+            .ul li {
+                float: left;
+                font: 13px helvetica;
+                font-weight: bold;
+                margin: 3px 0;
+            }
+
+                .ul li a {
+                    text-decoration: none;
+                    padding: 6px 15px;
+                    cursor: pointer;
+                }
+
+                    .ul li a:hover {
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+
+        #noti_Container {
+            position: relative;
+        }
+
+        /* A CIRCLE LIKE BUTTON IN THE TOP MENU. */
+        #noti_Button {
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            border-radius: 50%;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            margin: -3px 10px 0 10px;
+            cursor: pointer;
+        }
+
+        /* THE POPULAR RED NOTIFICATIONS COUNTER. */
+        #noti_Counter {
+            display: block;
+            position: absolute;
+            background: #E1141E;
+            color: #FFF;
+            font-size: 12px;
+            font-weight: normal;
+            padding: 1px 3px;
+            margin: -8px 0 0 25px;
+            border-radius: 2px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            z-index: 1;
+        }
+
+        /* THE NOTIFICAIONS WINDOW. THIS REMAINS HIDDEN WHEN THE PAGE LOADS. */
+        #notifications {
+            display: none;
+            width: 430px;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .20);
+            z-index: 0;
+        }
+            /* AN ARROW LIKE STRUCTURE JUST OVER THE NOTIFICATIONS WINDOW */
+            #notifications:before {
+                content: '';
+                display: block;
+                width: 0;
+                height: 0;
+                color: transparent;
+                border-color: transparent transparent #FFF;
+                margin-top: -20px;
+                margin-left: 10px;
+            }
+
+        .seeAll {
+            padding: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .nav > li > a {
+            color: #3c3c3c;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0);
+            border-bottom: 3px solid transparent;
+            display: none;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server"></asp:ScriptManagerProxy>
+        <!-- Start Main Wrapper -->
+        <div class="wrapper">
+            <!-- Start Main Header -->
+            <!-- Start Top Nav Bar -->
+            <section class="top-nav-bar">
+                <section class="container-fluid container">
+                    <section class="row-fluid">
+                        <section class="span6">
+                            <ul class="top-nav">
+                                <li><a href="Default.aspx" class="active">Home page</a></li>
+                                <li><a href="#NewsLetter">Contact Us</a></li>
+                            </ul>
+                        </section>
+                        <section class="span6 e-commerce-list">
+                            <ul>
+                                <li>Welcome! <a href="Page_Name_User-Checkout-Card-id=27122017">Login</a> or <a href="checkout.html">Create an account</a></li>
+                            </ul>
+                            <div class="c-btn">
+                                <a href="../Page_Name_User-Checkout-Card-id=27122017" class="maincart-btn">Cart</a>
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">0 item(s) - $0.00<span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">View Cart</a></li>
+                                        <li><a href="#">Checkout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <!-- End Top Nav Bar -->
+            <header id="main-header">
+                <section class="container-fluid container">
+                    <section class="row-fluid">
+                        <section class="span4">
+                            <h1 id="logo"><a href="Default.aspx">
+                                <img src="images/logo.png" /></a> </h1>
+                        </section>
+                        <section class="span8">
+                            <ul class="top-nav2">
+                                <li><a href="Page_Name_User-Checkout-Card-id=27122017">My Account</a></li>
+                                <li><a href="#">My Cart</a></li>
+                                <li><a href="Page_Name_User-Checkout-Card-id=27122017">Checkout</a></li>
+
+                            </ul>
+                            <div class="search-bar">
+                                <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+                                    <ContentTemplate>
+                                        <asp:TextBox runat="server" ID="txtBooksNames" class="form-control" AutoPostBack="true" placeholder="Search Entire Store Books Here..."></asp:TextBox>
+                                        <asp:AutoCompleteExtender ID="AutoCompleteExtender5" runat="server" Enabled="True"
+                                            ServiceMethod="GetBookName"
+                                            ServicePath="~\server.asmx"
+                                            TargetControlID="txtBooksNames"
+                                            UseContextKey="false"
+                                            MinimumPrefixLength="1"
+                                            CompletionInterval="50" CompletionListElementID="Panel5">
+                                        </asp:AutoCompleteExtender>
+                                        <asp:Panel runat="server" ID="Panel5" tab_1ScrollBars="Vertical" Style="overflow-y: auto; overflow-x: hidden; text-overflow: ellipsis">
+                                        </asp:Panel>
+
+                                    </ContentTemplate>
+                                    <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="txtBooksNames" />
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                                <button type="button" style="position: absolute; margin-top: 10px; height: 35px;border: 0; font-size: 14px; color: #fff; padding: 10px 20px; float: left; background: #e84825; cursor: pointer; transition: width 1s; -moz-transition: 1s; -webkit-transition: 1s; -o-transition: 1s;" id="btnSearch" runat="server" onserverclick="btnSearch_ServerClick">
+                                    Search
+                                </button>
+
+                                <asp:HyperLink runat="server" ID="lnkAdvancedSearch" href="#openModal" Style="position: absolute; margin-top: 50px;">Advanced Search</asp:HyperLink>
+                            </div>
+                        </section>
+                        <%-- -----------------------------------------------------------Advanced Search Technique--------------------------------------------------------------------------%>
+
+                        <div id="openModal" class="modalbg">
+                            <div class="dialog">
+                                <a href="#close" title="Close" class="close">X</a>
+                                <h2 style="color: #e84825;">Advanced Search</h2>
+
+                                <div>
+                                    <asp:Label ID="lblBook" runat="server" Text="Book Search"></asp:Label>
+                                    <div>
+                                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                            <ContentTemplate>
+                                                <asp:TextBox runat="server" ID="txtBookName" class="form-control" AutoPostBack="true" placeholder="Name"></asp:TextBox>
+                                                <asp:AutoCompleteExtender ID="AutoCompleteExtender3" runat="server" Enabled="True"
+                                                    ServiceMethod="GetBookName"
+                                                    ServicePath="~\server.asmx"
+                                                    TargetControlID="txtBookName"
+                                                    UseContextKey="false"
+                                                    MinimumPrefixLength="1"
+                                                    CompletionInterval="50" CompletionListElementID="Panel1">
+                                                </asp:AutoCompleteExtender>
+                                                <asp:Panel runat="server" ID="Panel1" tab_1ScrollBars="Vertical" Style="overflow-y: auto; overflow-x: hidden; text-overflow: ellipsis">
+                                                </asp:Panel>
+
+                                            </ContentTemplate>
+                                            <Triggers>
+                                                <asp:AsyncPostBackTrigger ControlID="txtBookName" />
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                    <div>
+                                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                                            <ContentTemplate>
+                                                <asp:TextBox runat="server" ID="txtPublisherName" placeholder="Publisher" CssClass="form-control"></asp:TextBox>
+                                                <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" Enabled="True"
+                                                    ServiceMethod="GetBookPublisher"
+                                                    ServicePath="~\server.asmx"
+                                                    TargetControlID="txtPublisherName"
+                                                    UseContextKey="false"
+                                                    MinimumPrefixLength="1"
+                                                    CompletionInterval="50" CompletionListElementID="Panel2">
+                                                </asp:AutoCompleteExtender>
+                                                <asp:Panel runat="server" ID="Panel2" tab_1ScrollBars="Vertical" Style="overflow-y: auto; overflow-x: hidden; text-overflow: ellipsis">
+                                                </asp:Panel>
+
+                                            </ContentTemplate>
+                                            <Triggers>
+                                                <asp:AsyncPostBackTrigger ControlID="txtPublisherName" />
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                    <div>
+                                        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                                            <ContentTemplate>
+                                                <asp:TextBox runat="server" ID="txtAuthor" placeholder="Author" CssClass="form-control"></asp:TextBox>
+                                                <asp:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" Enabled="True"
+                                                    ServiceMethod="GetBookAuthor"
+                                                    ServicePath="~\server.asmx"
+                                                    TargetControlID="txtAuthor"
+                                                    UseContextKey="false"
+                                                    MinimumPrefixLength="1"
+                                                    CompletionInterval="50" CompletionListElementID="Panel3">
+                                                </asp:AutoCompleteExtender>
+                                                <asp:Panel runat="server" ID="Panel3" tab_1ScrollBars="Vertical" Style="overflow-y: auto; overflow-x: hidden; text-overflow: ellipsis">
+                                                </asp:Panel>
+
+                                            </ContentTemplate>
+                                            <Triggers>
+                                                <asp:AsyncPostBackTrigger ControlID="txtAuthor" />
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div>
+                                    <asp:Label ID="Label1" runat="server" Text="School Search"></asp:Label>
+                                    <div>
+                                        <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+                                            <ContentTemplate>
+                                                <asp:TextBox runat="server" ID="txtSchoolName" placeholder="Name" CssClass="form-control"></asp:TextBox>
+                                                <asp:AutoCompleteExtender ID="AutoCompleteExtender4" runat="server" Enabled="True"
+                                                    ServiceMethod="GetSchoolName"
+                                                    ServicePath="~\server.asmx"
+                                                    TargetControlID="txtSchoolName"
+                                                    UseContextKey="false"
+                                                    MinimumPrefixLength="1"
+                                                    CompletionInterval="50" CompletionListElementID="Panel4">
+                                                </asp:AutoCompleteExtender>
+                                                <asp:Panel runat="server" ID="Panel4" tab_1ScrollBars="Vertical" Style="overflow-y: auto; overflow-x: hidden; text-overflow: ellipsis">
+                                                </asp:Panel>
+
+                                            </ContentTemplate>
+                                            <Triggers>
+                                                <asp:AsyncPostBackTrigger ControlID="txtSchoolName" />
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div>
+                                    <asp:Label ID="Label2" runat="server" Text="Category Search"></asp:Label>
+                                    <div>
+                                        <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                                            <ContentTemplate>
+                                                <asp:DropDownList runat="server" ID="ddlCategory" Style="width: 95%; margin-top: 5%; font-size: 13px; color: #000; height: 26px; float: left;">
+                                                </asp:DropDownList>
+                                            </ContentTemplate>
+                                            <Triggers>
+                                                <asp:PostBackTrigger ControlID="ddlCategory" />
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div>
+                                    <asp:Label ID="Label3" runat="server" Text="Grade Search"></asp:Label>
+                                    <div>
+                                        <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                                            <ContentTemplate>
+                                                <asp:DropDownList runat="server" ID="ddlClass" Style="width: 95%; margin-top: 5%; font-size: 13px; color: #000; height: 26px; float: left;">
+                                                </asp:DropDownList>
+                                            </ContentTemplate>
+                                            <Triggers>
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                </div>
+                                <hr />
+                                <asp:UpdatePanel ID="UpdatePanel7" runat="server">
+                                    <ContentTemplate>
+                                        <button type="button" style="border: 0; font-size: 14px; color: #fff; padding: 10px 20px; float: left; background: #e84825; cursor: pointer; transition: width 1s; -moz-transition: 1s; -webkit-transition: 1s; -o-transition: 1s;" runat="server" id="btnAdvancedSearch" onserverclick="btnAdvancedSearch_ServerClick">
+                                            Search
+                                        </button>
+                                    </ContentTemplate>
+                                    <Triggers>
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+                        <style type="text/css">
+                            .dialog div span {
+                                color: #E84825;
+                            }
+                        </style>
+                        <%-- -----------------------------------------------------------EO Advanced Search Technique--------------------------------------------------------------------------%>
+                    </section>
+                </section>
+                <!-- Start Main Nav Bar -->
+                <nav id="nav">
+                    <div class="navbar navbar-inverse">
+                        <div class="navbar-inner">
+                            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav">
+                                    <asp:Repeater runat="server" ID="dsFillCategory">
+                                        <ItemTemplate>
+                                            <li>
+                                                <asp:HyperLink runat="server" ID="lnkCat2Books" NavigateUrl='<%# Bind("Redirection")%>'>
+                                                    <ul class="ul">
+                                                        <li id="noti_Container">
+                                                            <div id="noti_Counter">
+                                                                <asp:Label runat="server" ID="lblCounts" Text='<%# Bind("Counts")%>'></asp:Label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <asp:HyperLink runat="server" ID="lnkCattoBook" NavigateUrl='<%# Bind("Redirection")%>'>
+                                                                <asp:Label runat="server" ID="lblCategoryName" Text='<%# Bind("CategoryName")%>'></asp:Label>
+                                                            </asp:HyperLink>
+                                                        </li>
+                                                    </ul>
+                                                </asp:HyperLink>
+
+                                            </li>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </ul>
+                            </div>
+                            <!--/.nav-collapse -->
+                        </div>
+                        <!-- /.navbar-inner -->
+                    </div>
+                    <!-- /.navbar -->
+                </nav>
+                <!-- End Main Nav Bar -->
+            </header>
+            <!-- End Main Header -->
+            <!-- Start Main Content Holder -->
+            <section id="content-holder" class="container-fluid container">
+
+                <div>
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+
+            </section>
+            <!-- End Main Content Holder -->
+            <!-- Start Footer Top 1 -->
+            <section class="container-fluid footer-top1">
+                <section class="container">
+                    <section class="row-fluid">
+                        <figure class="span3" id="NewsLetter">
+                            <h4>Newsletter</h4>
+                            <p>Subscribe to be the first to know about Best Deals and Exclusive Offers!</p>
+                            <input name="" type="text" class="field-bg" value="Enter Your Email" />
+                            <input name="" type="submit" value="Subscribe" class="sub-btn" />
+                        </figure>
+                        <figure class="span3">
+                            <h4>Twitter</h4>
+                            <ul class="tweets-list">
+                                <li>KotobShop-  Theme by Twister http<a href="#">://z.8o/XcexW23Q </a></li>
+                                <li>KotobShop-  Theme by Twister http<a href="#">://z.8o/XcexW23Q </a></li>
+                            </ul>
+                        </figure>
+                        <figure class="span3">
+                            <h4>Location</h4>
+                            <p>5/23, Loft Towers, Business Center, 6th Floor, Media City, Lebanon.</p>
+                            <span>
+                                <ul class="phon-list">
+                                    <li>(961) 438-555-314</li>
+                                    <li>(961) 367-252-333</li>
+                                </ul>
+                            </span><span class="mail-list"><a href="#">info@KotobShop</a><br />
+                                <a href="#">jobs@KotobShop.com</a> </span>
+                        </figure>
+                        <figure class="span3">
+                            <h4>Opening Time</h4>
+                            <p>Monday-Friday (8:00 am to 5:00 pm)</p>
+                            <p>Saturday (9:00 am to 5:00 pm)</p>
+                        </figure>
+                    </section>
+                </section>
+            </section>
+            <!-- End Footer Top 1 -->
+            <!-- Start Main Footer -->
+            <footer id="main-footer">
+                <section class="social-ico-bar">
+                    <section class="container">
+                        <section class="row-fluid">
+                            <article class="span6">
+                                <p>© <asp:Label runat="server" id="lblCopyRightYear" ></asp:Label>  KotobShop </p>
+                            </article>
+                            <article class="span6 copy-right">
+                                <p>Designed by <a href="http://www.twister.tech/">Twister Technologies</a> <small>(V.15012018)</small></p>
+                            </article>
+                        </section>
+                    </section>
+                </section>
+            </footer>
+            <!-- End Main Footer -->
+        </div>
+        <!-- End Main Wrapper -->
+
+        <!-- JS Files Start -->
+        <script type="text/javascript" src="js/lib.js"></script>
+        <!-- lib Js -->
+        <script type="text/javascript" src="js/modernizr.js"></script>
+        <!-- Modernizr -->
+        <script type="text/javascript" src="js/easing.js"></script>
+        <!-- Easing js -->
+        <script type="text/javascript" src="js/bs.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="js/bxslider.js"></script>
+        <!-- BX Slider -->
+        <script type="text/javascript" src="js/input-clear.js"></script>
+        <!-- Input Clear -->
+        <script src="js/range-slider.js"></script>
+        <!-- Range Slider -->
+        <script src="js/jquery.zoom.js"></script>
+        <!-- Zoom Effect -->
+        <script type="text/javascript" src="js/bookblock.js"></script>
+        <!-- Flip Slider -->
+        <script type="text/javascript" src="js/custom.js"></script>
+        <!-- Custom js -->
+        <script type="text/javascript" src="js/social.js"></script>
+        <!-- Social Icons -->
+        <script src="js/jquery.booklet.latest.js" type="text/javascript"></script>
+        <!-- Booklet Js -->
+        <script type="text/javascript">
+            $(function () {
+                $("#mybook").booklet({
+                    width: '100%',
+                    height: 430,
+                    auto: true,
+                    //speed: 250,
+                });
+            });
+        </script>
+        <!-- JS Files End -->
+        <style>
+            #socialicons > a span {
+                top: 0px;
+                left: -100%;
+                -webkit-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease-in-out;
+                -o-transition: all 0.3s ease-in-out;
+                -ms-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
+            }
+
+            #socialicons > ahover div {
+                left: 0px;
+            }
+        </style>
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            $(document).ready(function () {
+                $('.social_active').hoverdir({});
+            })
+            /* ]]> */
+        </script>
+        < 
+    </form>
+</body>
+</html>

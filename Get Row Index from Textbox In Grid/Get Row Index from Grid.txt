@@ -1,0 +1,53 @@
+  protected void txtItemCode_TextChanged(object sender, EventArgs e)
+        {
+            int RowIndex = ((GridViewRow)((TextBox)sender).NamingContainer).RowIndex;
+
+        }
+
+
+
+                                    <asp:GridView ID="gvOrders" runat="server" RowStyle-Wrap="false"  ForeColor="Black" AllowSorting="True" PageSize="5" ShowHeader="true" HorizontalAlign="Left" Width="100%" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" Style="color: black; border-collapse: collapse;" ShowHeaderWhenEmpty="true" showfooter="true"  >
+                                        <Columns>
+                                            <asp:BoundField   HeaderText="_"  ControlStyle-CssClass="displaynone" />
+                                            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Free"   showheader="True" >
+                                                <ItemTemplate>
+                                                    <asp:CheckBox runat="server" ID="cbFree" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Item Code">
+                                                <ItemTemplate>
+                                                    <asp:TextBox runat="server" ID="txtItemCode" OnTextChanged="txtItemCode_TextChanged"  autopostback="true"/>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Description" >
+                                                <ItemTemplate>
+                                                    <asp:TextBox runat="server" ID="txtDescription" OnTextChanged="txtDescription_TextChanged" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Quantity">
+                                                  <ItemTemplate>
+                                                    <asp:TextBox runat="server" ID="txtQuantity" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Cost">
+                                                <ItemTemplate>
+                                                    <asp:TextBox runat="server" ID="txtCost" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Price">
+                                                <ItemTemplate>
+                                                    <asp:TextBox runat="server" ID="txtPrice" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Discount %">
+                                                <ItemTemplate>
+                                                    <asp:TextBox runat="server" ID="txtDiscount" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderText="VAT">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox runat="server" ID="cbVAT" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>

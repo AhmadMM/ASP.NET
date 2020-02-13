@@ -1,0 +1,11 @@
+ List<MyClass> Data_FromDataTable = MyDataTable
+            .DefaultView
+            .ToTable(true, "xID", "xName")
+            .Rows
+            .Cast<DataRow>().Select(x => new MyClass
+            {
+                Id = (int)x["xID"],
+                Name = x["xName"].ToString() == "" ? "Empty" : x["xName"].ToString()
+            })
+            .Distinct()
+            .ToList();

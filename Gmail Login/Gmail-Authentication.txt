@@ -1,0 +1,145 @@
+
+
+Steps to Authenticate a Google Sign Login
+
+1)	ADD this to Design
+			<asp:Button ID="btnLogin" Text="Login" runat="server" OnClick="Login" />
+			<asp:Panel ID="pnlProfile" runat="server" Visible="false">
+			<hr />
+			<table>
+   			 <tr>
+     			   <td rowspan="6" valign="top">
+          		  <asp:Image ID="ProfileImage" runat="server" Width="50" Height="50" />
+       		           </td>
+  			  </tr>
+   			 <tr>
+      			  <td>
+       			     ID:
+        		    <asp:Label ID="lblId" runat="server" Text=""></asp:Label>
+        			</td>
+    			</tr>
+   			 <tr>
+    			    <td>
+      			      Name:
+       			     <asp:Label ID="lblName" runat="server" Text=""></asp:Label>
+      			  </td>
+  			  </tr>
+  			  <tr>
+   			     <td>
+ 			           Email:
+   			         <asp:Label ID="lblEmail" runat="server" Text=""></asp:Label>
+     			   </td>
+ 			   </tr>
+ 			   <tr>
+   			    <td>
+      			      Gender:
+      			      <asp:Label ID="lblGender" runat="server" Text=""></asp:Label>
+    			    </td>
+  			  </tr>
+  			  <tr>
+   			     <td>
+    			        Type:
+   			         <asp:Label ID="lblType" runat="server" Text=""></asp:Label>
+    			    </td>
+ 			   </tr>
+			        <tr>
+     			   <td>
+        			    <asp:Button Text="Clear" runat="server" OnClick = "Clear" />
+      			  </td>
+   			 </tr>
+			</table>
+			</asp:Panel>
+
+
+2) 
+	using ASPSnippets.GoogleAPI; //In File dll
+	using System.Web.Script.Serialization;
+
+3)
+	 
+		public class GoogleProfile
+		{
+ 		   public string Id { get; set; }
+ 		   public string DisplayName { get; set; }
+ 		   public Image Image { get; set; }
+   		   public List<Email> Emails { get; set; }
+  		   public string Gender { get; set; }
+                   public string ObjectType { get; set; }
+		}
+ 
+		public class Email
+		{
+		    public string Value { get; set; }
+  	            public string Type { get; set; }
+		}
+ 
+		public class Image
+		{
+ 		   public string Url { get; set; }
+		}
+
+4)
+
+		protected void Login(object sender, EventArgs e)
+		{
+  		  GoogleConnect.Authorize("profile", "email");
+		}
+
+5) ADD this Login
+
+		
+		protected void Page_Load(object sender, EventArgs e)
+		{
+ 		  GoogleConnect.ClientId = "<Google Client ID>";
+  		  GoogleConnect.ClientSecret = "<Google Client Secret>";
+  		  GoogleConnect.RedirectUri = Request.Url.AbsoluteUri.Split('?')[0];
+ 
+    		if (!string.IsNullOrEmpty(Request.QueryString["code"]))
+   		 {
+      		  string code = Request.QueryString["code"];
+      		  string json = GoogleConnect.Fetch("me", code);
+       		 GoogleProfile profile = new JavaScriptSerializer().Deserialize<GoogleProfile>(json);
+       		 lblId.Text = profile.Id;
+       		 lblName.Text = profile.DisplayName;
+       		 lblEmail.Text = profile.Emails.Find(email => email.Type == "account").Value;
+        	 lblGender.Text = profile.Gender;
+       		 lblType.Text = profile.ObjectType;
+      		 ProfileImage.ImageUrl = profile.Image.Url;
+      		 pnlProfile.Visible = true;
+   	         btnLogin.Enabled = false;
+   		 }
+  		  if (Request.QueryString["error"] == "access_denied")
+   			 {
+    			    ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "alert('Access denied.')", true);
+   			 }
+		}
+
+6)
+	
+		protected void Clear(object sender, EventArgs e)
+		{
+ 		   GoogleConnect.Clear(Request.QueryString["code"]);
+		}
+
+
+
+
+
+
+
+----------------------------------------------------------------------NOW GOTO SITES-------------------------------------------------------------------------------------------------------
+
+https://console.developers.google.com/apis/
+
+
+1) 	Add Application Name
+
+2)	Add Links 
+
+3)	Goto Library
+	
+		In order to access Google APIs you need to register your application on Google developer console. You have probably already created your credentials. The API key or Oauth2 credentials 		you created identifies the application to Google. The project that was used to create the API key or Oauth2 credentials you are using must have the **Google+** API enabled.
+
+		Enable API:
+
+		What you have forgotten to do is to tell Google which APis you will be accessing. On the Left hand side look for "Library" find the Google+ api and enable it.
