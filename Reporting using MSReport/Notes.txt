@@ -1,0 +1,7 @@
+1) Add Reference 
+
+2) Add Page ASP and Put in it Report Viewer  > Select Report OR Create One
+									
+3) Open Report ADD in it DataSET And DataSource that in ConnectionString "USE Stored Procedures".
+
+4) In Tools add Table and Put in Each Row Head and Value By using the data in fields promoted by the selected DataSet
